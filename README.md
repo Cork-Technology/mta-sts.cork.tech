@@ -35,7 +35,7 @@ In case the sending e-mail server is not able to initiate a secure connection, i
    _mta-sts    3600    TXT      "v=STSv1; id=20220317000000Z"
    ```
 
-   **Note that you will need to change the `id=` here whenever you make changes to your `mta-sts.txt` policy file.**
+   **Note that you will need to change the `id=` here to the current date whenever you make changes to your `mta-sts.txt` policy file.**
 
 6. Validate your setup, for example by using the [MTA-STS Lookup by MXToolBox](https://mxtoolbox.com/mta-sts.aspx), or looking into your [Hardenize Public Report](https://www.hardenize.com/).
 
@@ -57,26 +57,6 @@ _Optional (but **highly recommended**):_
 ## License
 
 [MIT License](https://github.com/jpawlowski/mta-sts.template/blob/gh-pages/LICENSE)
-
-
-# mta-sts-template
-
-This templated repository automatically deploys a GitHub Pages site for hosting a `mta-sts.txt` file.
-You should be configuring a `mta-sts.txt` deployment for every domain you recieve emails with.
-
-When [using this template](https://github.com/new?template_name=mta-sts-template&template_owner=co-cddo) you need to set the new name to the mta-sts fully qualified domain name, like `mta-sts.gc3.security.gov.uk`, this is to ensure the auto-discovery and deployment of Pages works appropriately. You can alternatively set the `MTASTS_DOMAIN` environment variable in the workflow.
-
-## Steps
-1. Publish a TLS-RPT record, like `_smtp._tls 300 TXT "v=TLSRPTv1;rua=mailto:tls-rua@mailcheck.service.ncsc.gov.uk"`
-2. Use [this template](https://github.com/new?template_name=mta-sts-template&template_owner=co-cddo), making sure to set the new repository name to the full mta-sts domain, like `mta-sts.gc3.security.gov.uk`
-3. Observe the [Actions](../../actions) to make sure [configure.yml](../../actions/workflows/configure.yml) and [gh-pages.yml](../../actions/workflows/gh-pages.yml) deploy correctly
-    - Make sure the build and deployment source is set to GitHub Actions in [Settings → Pages](../../settings/pages)
-    - You may need to select the `main` branch and `/ root` in [Settings → Pages](../../settings/pages)
-5. Configure [your DNS to point to GitHub](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site)
-    - If deploying in [co-cddo](https://github.com/co-cddo), use the CNAME `co-cddo.github.io` (`mta-sts 60 CNAME co-cddo.github.io.`)
-6. Check the `Custom domain` in [Settings → Pages](../../settings/pages) and ensure `Enforce HTTPS` is checked (this can take a few hours)
-7. Check your deployment by visiting the domain, where you should get automatically redirected to `/.well-known/mta-sts.txt` (e.g. <https://mta-sts.gc3.security.gov.uk>)
-8. Set your `_mta-sts` TXT record, like `_mta-sts 60 TXT "v=STSv1; id=20240215"` (where the id value is set to the current date, you'll need to change this if `mta-sts.txt` is updated)
 
 ## More information
 You can find more about MTA-STS here: 
